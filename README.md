@@ -19,7 +19,8 @@ http://localhost:8800/swagger-ui.html#/
 ```
 
 >Add Items to catalog:
-```{
+```
+{
   "catalogItems": [
     {
       "sku": "sku-1",
