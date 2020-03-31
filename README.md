@@ -1,12 +1,13 @@
 # shopping-cart
 
 
-Use swagger to post requests:
+>Use swagger ui to post requests
 http://localhost:8800/swagger-ui.html#/
 
 
 >Add Customer request:
-```{
+```
+{
   "name": "param",
   "address": {
     "addressLine": "address line 1",
@@ -15,9 +16,9 @@ http://localhost:8800/swagger-ui.html#/
     "pinCode": 560076
   }
 }
+```
 
 >Add Items to catalog:
-
 ```{
   "catalogItems": [
     {
@@ -44,7 +45,17 @@ http://localhost:8800/swagger-ui.html#/
     
   ]
 }
+```
 
-
+>Add Item to cart
+```
+{
+  "customerId": "1",
+  "cartItem": {
+    "itemId":1,
+    "quantity": 2
+  }
+}
+```
 
 
