@@ -5,8 +5,8 @@ Use swagger to post requests:
 http://localhost:8800/swagger-ui.html#/
 
 
-Add Customer request:
-{
+>Add Customer request:
+```{
   "name": "param",
   "address": {
     "addressLine": "address line 1",
@@ -16,9 +16,9 @@ Add Customer request:
   }
 }
 
-Add Items to catalog:
+>Add Items to catalog:
 
-{
+```{
   "catalogItems": [
     {
       "sku": "sku-1",
