@@ -1,19 +1,20 @@
 # shopping-cart
-This application provide functionalities to:
+> This application provide functionalities to:
+```
+Add a USER 
 
-> Add a USER 
+Add items(books) to catalog
 
-> Add items(books) to catalog
+Add Items to Cart
 
-> Add Items to Cart
+Checkout the items added to cart
+```
 
-> Checkout the items added to cart
-
->Use swagger ui to post requests
+> Use swagger ui to post requests
 http://localhost:8800/swagger-ui.html#/
 
 
->Add Customer:
+> Add Customer:
 ```
 {
   "name": "param",
