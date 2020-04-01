@@ -33,6 +33,7 @@ public class Item {
   
   public Item(ItemEntity itemEntity) {
     this.id = itemEntity.getId();
+    this.sku = itemEntity.getSku();
     this.category = itemEntity.getCategory();
     this.price = itemEntity.getPrice();
     this.quantity = itemEntity.getQuantity();

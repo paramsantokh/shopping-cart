@@ -38,6 +38,7 @@ public class CatalogServiceImpl implements CatalogService {
       ItemEntity itm = new ItemEntity();
       itm.setCategory(item.getCategory());
       itm.setPrice(item.getPrice());
+      itm.setSku(item.getSku());
       if (ItemType.BOOK.toString().equalsIgnoreCase(item.getCategory())) {
         BookDetails book = new BookDetails(item.getSku(), item.getTitle(), item.getAuthor());
         itm.setBookDetails(book);
@@ -66,7 +67,7 @@ public class CatalogServiceImpl implements CatalogService {
         
         itemEntity.setCategory(it.getCategory());
         itemEntity.setPrice(it.getPrice());
-        
+        itemEntity.setSku(it.getSku());
         BookDetails bookDetails = itemEntity.getBookDetails();
         bookDetails.setTitle(it.getTitle());
         bookDetails.setAuthor(it.getAuthor());
