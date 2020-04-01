@@ -18,12 +18,22 @@ http://localhost:8800/swagger-ui.html#/
 ```
 {
   "name": "param",
-  "address": {
-    "addressLine": "address line 1",
-    "city": "bangalore",
-    "state": "ka",
-    "pinCode": 560076
-  }
+  "addresses": [
+    {
+      "type": "BILLING",
+      "addressLine": "address line 1",
+      "city": "bengluru",
+      "state": "ka",
+      "pinCode": 560076
+    },
+    {
+      "type": "SHIPPING",
+      "addressLine": "address line 1",
+      "city": "bengluru",
+      "state": "KA",
+      "pinCode": 5600
+    }
+  ]
 }
 ```
 
