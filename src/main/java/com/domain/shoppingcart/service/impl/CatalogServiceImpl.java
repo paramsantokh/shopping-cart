@@ -29,7 +29,7 @@ public class CatalogServiceImpl implements CatalogService {
   @Override
   public ItemResponse addItems(ItemRequest items) {
     if (items == null || items.getCatalogItems() == null) {
-      return null;
+      return new ItemResponse();
     }
     
     List<ItemEntity> itemEntityList = new ArrayList<>();
@@ -164,8 +164,9 @@ public class CatalogServiceImpl implements CatalogService {
       return new Builder(customer.get()).getReqCustomer();
     }
     
-    return null;
+    return new Customer();
   }
+  
 }
 
 

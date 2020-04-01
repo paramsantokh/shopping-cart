@@ -7,6 +7,8 @@ public class Address {
   @JsonProperty
   private String id;
   @JsonProperty
+  private String type;
+  @JsonProperty
   private String addressLine;
   @JsonProperty
   private String city;
@@ -18,8 +20,9 @@ public class Address {
   public Address() {
   }
   
-  public Address(String id, String addressLine, String city, String state, long pinCode) {
+  public Address(String id, String type, String addressLine, String city, String state, long pinCode) {
     this.id = id;
+    this.type = type;
     this.addressLine = addressLine;
     this.city = city;
     this.state = state;
@@ -32,6 +35,14 @@ public class Address {
   
   public void setId(String id) {
     this.id = id;
+  }
+  
+  public String getType() {
+    return type;
+  }
+  
+  public void setType(String type) {
+    this.type = type;
   }
   
   public String getAddressLine() {

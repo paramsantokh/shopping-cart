@@ -10,7 +10,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import java.util.List;
 
 @Entity
 @JsonIgnoreProperties (ignoreUnknown = false)
@@ -23,14 +25,14 @@ public class Customer {
   
   private String name;
   
-  @OneToOne (fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-  @JoinColumn(name="ADDR_ID")
-  private Address address;
+  @OneToMany (targetEntity = Address.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+  @JoinColumn(name="customer_id", referencedColumnName = "customerId")
+  private List<Address> address;
   
   public Customer() {
   }
   
-  public Customer(String name, Address address) {
+  public Customer(String name, List<Address> address) {
     this.name = name;
     this.address = address;
   }
@@ -51,11 +53,12 @@ public class Customer {
     this.name = name;
   }
   
-  public Address getAddress() {
+  public List<Address> getAddress() {
     return address;
   }
   
-  public void setAddress(Address address) {
+  public void setAddress(List<Address> address) {
     this.address = address;
   }
+  
 }

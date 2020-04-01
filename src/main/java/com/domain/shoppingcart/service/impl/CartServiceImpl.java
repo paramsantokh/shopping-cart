@@ -1,5 +1,6 @@
 package com.domain.shoppingcart.service.impl;
 
+import com.domain.shoppingcart.model.Address;
 import com.domain.shoppingcart.model.Customer;
 import com.domain.shoppingcart.model.request.CartItem;
 import com.domain.shoppingcart.model.request.CartRequest;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class CartServiceImpl implements CartService {
@@ -42,7 +44,7 @@ public class CartServiceImpl implements CartService {
       cartRepository.saveAndFlush(cart);
     } else {
       //new item: add to cart
-      cart = new Cart(customerId, itemId, cartItem.getQuantity(), catalogItem.getPrice());
+      cart = new Cart(customerId, itemId, cartItem.getQuantity(), catalogItem.getPrice() * cartItem.getQuantity());
       //persist cart
       cartRepository.save(cart);
     }
@@ -59,17 +61,17 @@ public class CartServiceImpl implements CartService {
     int reqQuantity = cartItem.getQuantity();
     //check if item in cart: update the quantity
     Cart cart = getItemInCart(customerId, itemId);
+    Item catalogItem = catalogService.getItemById(itemId);
     if (cart != null) {
       int cartQuantity = cart.getQuantity();
       if (cartQuantity > 0 && cartQuantity > reqQuantity && cartQuantity - reqQuantity != 0) {
         cart.setQuantity(cartQuantity - reqQuantity);
+        cart.setAmount(cart.getQuantity() * catalogItem.getPrice());
         cartRepository.saveAndFlush(cart);
-      } else{
+      } else {
         cartRepository.deleteItemByCustomerIdAndItemId(customerId, itemId);
       }
     }
-    
-    
     
     return getCartItems(customerId);
   }
@@ -103,10 +105,19 @@ public class CartServiceImpl implements CartService {
    * @param customerId
    * @return
    */
-  public CheckoutResponse checkout(String customerId){
+  public CheckoutResponse checkout(String customerId) {
     Customer customer = catalogService.getCustomer(customerId);
+    if(customer == null){
+      return new CheckoutResponse();
+    }
+    //only send shipping address on checkout
+    List<Address> shippingAddress = customer.getAddresses() != null ?
+                                    customer.getAddresses().stream().filter(a -> "SHIPPING".equals(a.getType())).collect(Collectors.toList()) : new ArrayList<>();
+    
+    customer.setAddresses(shippingAddress);
+    
     CartResponse cartResponse = getCartItems(customerId);
-    double totalPrice = cartResponse != null ? cartResponse.getItem().stream().mapToDouble(Item::getPrice).sum() : 0.0;
+    double totalPrice = cartResponse != null && cartResponse.getItem() != null ? cartResponse.getItem().stream().mapToDouble(Item::getPrice).sum() : 0.0;
     
     CheckoutResponse checkoutResponse = new CheckoutResponse();
     checkoutResponse.setCustomer(customer);

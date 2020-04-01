@@ -3,6 +3,9 @@ package com.domain.shoppingcart;
 import com.domain.shoppingcart.model.Address;
 import com.domain.shoppingcart.model.Customer;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Builder {
   
   Customer reqCustomer;
@@ -13,7 +16,7 @@ public class Builder {
     entityCutsomer.setCustomerId(reqCustomer.getCustomerId());
     entityCutsomer.setName(reqCustomer.getName());
     
-    entityCutsomer.setAddress(toAddress(reqCustomer.getAddress()));
+    entityCutsomer.setAddress(toEntityAddress(reqCustomer.getAddresses()));
   }
   
   public Builder(com.domain.shoppingcart.repository.entity.Customer entityCustomer) {
@@ -21,19 +24,25 @@ public class Builder {
     reqCustomer.setCustomerId(entityCustomer.getCustomerId());
     reqCustomer.setName(entityCustomer.getName());
     
-    reqCustomer.setAddress(toAddress(entityCustomer.getAddress()));
+    reqCustomer.setAddresses(toModelAddress(entityCustomer.getAddress()));
   }
   
-  private com.domain.shoppingcart.repository.entity.Address toAddress(Address address) {
-    com.domain.shoppingcart.repository.entity.Address address1
-        = new com.domain.shoppingcart.repository.entity.Address(address.getAddressLine(), address.getCity(), address.getState(), address.getPinCode());
-    return address1;
+  public List<com.domain.shoppingcart.repository.entity.Address> toEntityAddress(List<Address> addresses) {
+    List<com.domain.shoppingcart.repository.entity.Address> addressList = new ArrayList<>();
+    addresses.forEach(address -> {
+      addressList.add(new com.domain.shoppingcart.repository.entity.Address(address.getType(), address.getAddressLine(), address.getCity(), address.getState(), address.getPinCode()));
+    });
+    
+    return addressList;
   }
   
-  private Address toAddress(com.domain.shoppingcart.repository.entity.Address address) {
-    Address address1
-        = new Address(address.getId(), address.getAddressLine(), address.getCity(), address.getState(), address.getPinCode());
-    return address1;
+  private List<Address> toModelAddress(List<com.domain.shoppingcart.repository.entity.Address> addresses) {
+    List<Address> addressList = new ArrayList<>();
+    addresses.forEach(address -> {
+      addressList.add(new Address(address.getId(), address.getAddressType(), address.getAddressLine(), address.getCity(), address.getState(), address.getPinCode()));
+    });
+    
+    return addressList;
   }
   
   public com.domain.shoppingcart.repository.entity.Customer getEntityCutsomer() {

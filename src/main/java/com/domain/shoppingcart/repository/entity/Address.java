@@ -1,5 +1,7 @@
 package com.domain.shoppingcart.repository.entity;
 
+import com.domain.shoppingcart.AddressType;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -14,6 +16,8 @@ public class Address{
   @GeneratedValue (strategy = GenerationType.IDENTITY)
   private String id;
   
+  private String addressType;
+  
   private String addressLine;
   
   private String city;
@@ -25,7 +29,8 @@ public class Address{
   public Address() {
   }
   
-  public Address(String addressLine, String city, String state, long pinCode) {
+  public Address(String addressType, String addressLine, String city, String state, long pinCode) {
+    this.addressType = addressType;
     this.addressLine = addressLine;
     this.city = city;
     this.state = state;
@@ -34,6 +39,14 @@ public class Address{
   
   public String getId() {
     return id;
+  }
+  
+  public String getAddressType() {
+    return addressType;
+  }
+  
+  public void setAddressType(String addressType) {
+    this.addressType = addressType;
   }
   
   public void setId(String id) {
