@@ -78,4 +78,6 @@ http://localhost:8800/swagger-ui.html#/
 }
 ```
 
+Use checkout to see the complete order details.
+
 
